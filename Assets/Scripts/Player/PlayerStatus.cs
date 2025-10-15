@@ -25,48 +25,6 @@ public class BodyPart
     public double timer { get; set; }
 }
 
-/*
-public class Body
-{
-    public BodyPart leftArm = new BodyPart
-    {
-        part = Parts.Arm,
-        health = 10,
-        infected = false,
-    };
-    public BodyPart rightArm = new BodyPart
-    {
-        part = Parts.Arm,
-        health = 10,
-        infected = false,
-    };
-    public BodyPart leftLeg = new BodyPart
-    {
-        part = Parts.Leg,
-        health = 10,
-        infected = false,
-    };
-    public BodyPart rightLeg = new BodyPart
-    {
-        part = Parts.Leg,
-        health = 10,
-        infected = false,
-    };
-    public BodyPart body = new BodyPart
-    {
-        part = Parts.Body,
-        health = 35,
-        infected = false,
-    };
-    public BodyPart head = new BodyPart
-    {
-        part = Parts.Head,
-        health = 25,
-        infected = false,
-    };
-}
-*/
-
 public class PlayerStatus : MonoBehaviour
 {
     [SerializeField]

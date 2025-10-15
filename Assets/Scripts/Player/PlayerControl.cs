@@ -41,8 +41,7 @@ public class PlayerControl : MonoBehaviour
         move.Disable();
     }
 
-    // Update is called once per frame
-    void Update()
+    private void movePlayer()
     {
         moveDirection = move.ReadValue<Vector2>();
 
@@ -55,5 +54,11 @@ public class PlayerControl : MonoBehaviour
 
         if (rb.linearVelocityX != 0)
             spriteRender.flipX = rb.linearVelocityX < 0;
+    }
+
+    // Update is called once per frame
+    void Update()
+    {
+        movePlayer();
     }
 }

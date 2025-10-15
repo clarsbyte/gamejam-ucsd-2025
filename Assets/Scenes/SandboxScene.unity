@@ -252,7 +252,7 @@ MonoBehaviour:
   m_Name: 
   m_EditorClassIdentifier: 
   rb: {fileID: 422229526}
-  moveSpeed: 0.5
+  moveSpeed: 0
   player: {fileID: 1666473999}
   spriteRender: {fileID: 422229524}
 --- !u!70 &422229528
