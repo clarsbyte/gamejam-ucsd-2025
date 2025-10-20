@@ -33,7 +33,7 @@ public class EnemyController : MonoBehaviour
             normalizedDirection.y * moveSpeed
         );
 
-        Debug.Log(normalizedDirection);
+        // Debug.Log(normalizedDirection);
 
         if (rb.linearVelocityX != 0)
             spriteRender.flipX = rb.linearVelocityX < 0;
@@ -42,6 +42,6 @@ public class EnemyController : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        chasePlayer();
+        // chasePlayer();
     }
 }
