@@ -7,6 +7,7 @@ TagManager:
   - Enemy
   - Dummy
   - Weapon
+  - EnemyAttack
   layers:
   - Default
   - TransparentFX

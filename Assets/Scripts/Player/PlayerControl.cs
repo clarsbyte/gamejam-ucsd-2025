@@ -53,6 +53,8 @@ public class PlayerControl : MonoBehaviour
 
     private void playerMove()
     {
+        animator.SetBool("legSacrificed", true);
+
         moveDirection = move.ReadValue<Vector2>();
 
         rb.linearVelocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
