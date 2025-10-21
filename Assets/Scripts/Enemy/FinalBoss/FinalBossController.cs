@@ -42,7 +42,7 @@ public class FinalBossController : MonoBehaviour
         newAOE.SetActive(true);
     }
 
-    private double timeTillAttack = 15;
+    private double attackCooldown = 5;
 
     private double currentAttackCooldown;
 
@@ -72,7 +72,7 @@ public class FinalBossController : MonoBehaviour
     {
         currentAttackCooldown += Time.deltaTime;
 
-        if (currentAttackCooldown >= timeTillAttack)
+        if (currentAttackCooldown >= attackCooldown)
         {
             triggerMoveset(++currentMoveset);
 

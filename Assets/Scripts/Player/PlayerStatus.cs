@@ -1,3 +1,4 @@
+using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class BodyPart
@@ -18,9 +19,8 @@ public class Body
 
 public class Modifier
 {
-    public string name { get; set; }
-    public float number { get; set; }
-    public int amount { get; set; }
+    public string status { get; set; }
+    public float amount { get; set; }
 }
 
 public class PlayerStatus : MonoBehaviour
@@ -35,8 +35,8 @@ public class PlayerStatus : MonoBehaviour
     private float attackSpeed = 1f;
     private float moveSpeed = 1f;
 
-    private string[] buffs;
-    private string[] debuffs;
+    private Modifier[] buffs;
+    private Modifier[] debuffs;
 
     public Body body = new Body
     {
@@ -48,7 +48,24 @@ public class PlayerStatus : MonoBehaviour
         torso = new BodyPart { sacrificed = false, infected = false },
     };
 
-    private void giveDebuff() { }
+    /*
+        Debuffs:
+        maxhealth down
+        attackspeed down
+        movespeed down
+    */
+    private void giveDebuff()
+    {
+        int debuffSelector = Random.Range(0, 5);
+    }
+
+    /*
+        Buffs:
+        maxhealth down
+        attackpower up
+        movespeed down
+    */
+    private void giveBuff() { }
 
     private void onHit()
     {
@@ -75,8 +92,8 @@ public class PlayerStatus : MonoBehaviour
     void Start()
     {
         currentHealth = maxHealth;
-        buffs = new string[6];
-        debuffs = new string[6];
+        buffs = new Modifier[6];
+        debuffs = new Modifier[6];
     }
 
     void OnCollisionEnter2D(Collision2D entity)
