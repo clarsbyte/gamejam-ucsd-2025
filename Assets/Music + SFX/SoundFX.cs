@@ -1,3 +1,4 @@
+using System;
 using UnityEngine;
 
 public class SoundFX : MonoBehaviour
@@ -10,6 +11,10 @@ public class SoundFX : MonoBehaviour
     [SerializeField] AudioSource heartbeatSFXSource;
     public AudioClip heartbeatSFX;
 
+    //swing sfx initiliazation;
+    [SerializeField] AudioSource swingSFXSource;
+    public AudioClip[] swingsSFX;
+
     public void playDeathSFX()
     {
         deathSFXSource.clip = deathSFX;
@@ -20,6 +25,22 @@ public class SoundFX : MonoBehaviour
     {
         heartbeatSFXSource.clip = heartbeatSFX;
         heartbeatSFXSource.Play();
+    }
+
+    public void playSwingSFX()
+    {
+        // Test code
+        // if ((int)Math.Round(UnityEngine.Random.Range(0.0F, 1.0F)) == 0)
+        // {
+        //     swingSFXSource.clip = swingsSFX[0];
+        // }
+        // else
+        // {
+        //     swingSFXSource.clip = swingsSFX[1];
+        // }
+
+        swingSFXSource.clip = swingsSFX[(int)Math.Round(UnityEngine.Random.Range(0.0F, 1.0F))];
+        swingSFXSource.Play();
     }
 }
 
