@@ -24,10 +24,33 @@ public class PlayerControl : MonoBehaviour
     [SerializeField]
     private Animator animator;
 
+    // Reference to weapon
+    [SerializeField]
+    private WeaponHit weapon;
+
     // Runs before initialization
     private void Awake()
     {
         playerControls = new InputSystemActions();
+
+        // Check if weapon reference is set
+        if (weapon == null)
+        {
+            Debug.LogWarning("PlayerControl: Weapon reference is NULL! Trying to find weapon in children...");
+            weapon = GetComponentInChildren<WeaponHit>();
+            if (weapon != null)
+            {
+                Debug.Log("Found weapon automatically: " + weapon.gameObject.name);
+            }
+            else
+            {
+                Debug.LogError("PlayerControl: Could not find WeaponHit component in children! Please attach WeaponHit script to a child GameObject or assign it manually.");
+            }
+        }
+        else
+        {
+            Debug.Log("PlayerControl: Weapon reference is set to: " + weapon.gameObject.name);
+        }
     }
 
     // Enables/tracks the inputs
@@ -40,6 +63,8 @@ public class PlayerControl : MonoBehaviour
 
         attack = playerControls.Player.Attack;
         attack.Enable();
+
+        Debug.Log("PlayerControl: Input system enabled. Attack action enabled.");
     }
 
     // Disables the inputs
@@ -94,23 +119,39 @@ public class PlayerControl : MonoBehaviour
         Debug.Log("Starting animation");
     }
 
+    // Called by animation event when attack starts
     private void eventAnimationFunctionStart()
     {
-        Debug.Log("Starting animation");
+        Debug.Log("Attack animation started");
+        if (weapon != null)
+        {
+            weapon.EnableWeapon();
+        }
+        else
+        {
+            Debug.LogWarning("Weapon reference not set in PlayerControl!");
+        }
     }
 
+    // Called by animation event when attack ends
     private void eventAnimationFunctionEnd()
     {
-        Debug.Log("Ending animation");
+        Debug.Log("Attack animation ended");
+        if (weapon != null)
+        {
+            weapon.DisableWeapon();
+        }
     }
 
     // Update is called once per frame
     void Update()
     {
         playerMove();
-        // playerAttack();
 
         if (attack.triggered)
+        {
             animator.SetTrigger("attack");
+            Debug.Log("Attack triggered");
+        }
     }
 }
