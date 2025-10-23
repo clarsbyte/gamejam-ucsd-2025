@@ -25,10 +25,9 @@ public class Modifier
 
 public class PlayerStatus : MonoBehaviour
 {
-    [SerializeField]
-    private int maxHealth;
-
-    private int currentHealth;
+    public int maxHealth;
+    public int currentHealth;
+    public HealthBar healthBar;
 
     private float dmg = 1f;
     private float durability = 1f;
