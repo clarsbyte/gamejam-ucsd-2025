@@ -13,7 +13,7 @@ public class InteractionDetector : MonoBehaviour
 
     private InputAction interact;
 
-     private void Awake()
+    private void Awake()
     {
         playerControls = new InputSystemActions();
     }
@@ -32,7 +32,6 @@ public class InteractionDetector : MonoBehaviour
         interact.Disable();
     }
 
-
     // Start is called once before the first execution of Update after the MonoBehaviour is created
     void Start()
     {
@@ -40,8 +39,10 @@ public class InteractionDetector : MonoBehaviour
         ShrineView.SetActive(false);
     }
 
-    public void OnInteract(InputAction.CallbackContext context){
-        if (context.performed){
+    public void OnInteract(InputAction.CallbackContext context)
+    {
+        if (context.performed)
+        {
             interactableInRange?.Interact();
         }
     }
@@ -49,27 +50,33 @@ public class InteractionDetector : MonoBehaviour
     // Update is called once per frame
     void Update()
     {
-        if(interact.WasPressedThisFrame()){
+        if (interact.WasPressedThisFrame())
+        {
             interactableInRange?.Interact();
         }
     }
 
-    private void OnTriggerEnter2D(Collider2D collision){
-        if(collision.TryGetComponent(out IInteractable interactable)){
+    private void OnTriggerEnter2D(Collider2D collision)
+    {
+        if (collision.TryGetComponent(out IInteractable interactable))
+        {
             interactIcon.SetActive(true);
             interactableInRange = interactable;
         }
-        
     }
 
-    private void OnTriggerExit2D(Collider2D collision){
-        if(collision.TryGetComponent(out IInteractable interactable) && interactable == interactableInRange){
+    private void OnTriggerExit2D(Collider2D collision)
+    {
+        if (
+            collision.TryGetComponent(out IInteractable interactable)
+            && interactable == interactableInRange
+        )
+        {
             interactIcon.SetActive(false);
             interactableInRange = null;
 
             //close shrine view when get too far from shrine
             ShrineView.SetActive(false);
         }
-        
     }
 }

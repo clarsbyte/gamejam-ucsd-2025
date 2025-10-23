@@ -183,7 +183,7 @@ public class PlayerControl : MonoBehaviour
         if (attack.triggered)
         {
             animator.SetTrigger("attack");
-            Debug.Log("Attack triggered");
+            // Debug.Log("Attack triggered");
         }
     }
 }
