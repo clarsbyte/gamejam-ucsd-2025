@@ -5,7 +5,9 @@ public class WeaponHit : MonoBehaviour
     private int count = 0;
 
     [SerializeField]
-    [Tooltip("Assign a specific collider for the weapon. If null, won't disable any collider (for separate weapon GameObjects).")]
+    [Tooltip(
+        "Assign a specific collider for the weapon. If null, won't disable any collider (for separate weapon GameObjects)."
+    )]
     private Collider2D weaponCollider;
 
     void Start()
@@ -22,7 +24,9 @@ public class WeaponHit : MonoBehaviour
         }
         else
         {
-            Debug.LogWarning("WeaponHit: No weapon collider assigned. Weapon will always be active (not recommended if on Player). Create a separate weapon GameObject or assign a specific collider.");
+            Debug.LogWarning(
+                "WeaponHit: No weapon collider assigned. Weapon will always be active (not recommended if on Player). Create a separate weapon GameObject or assign a specific collider."
+            );
         }
     }
 
@@ -48,7 +52,12 @@ public class WeaponHit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log("WeaponHit triggered by: " + other.gameObject.name + " with tag: " + other.gameObject.tag);
+        Debug.Log(
+            "WeaponHit triggered by: "
+                + other.gameObject.name
+                + " with tag: "
+                + other.gameObject.tag
+        );
 
         if (other.gameObject.CompareTag("Enemy"))
         {

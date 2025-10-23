@@ -12,16 +12,10 @@ public class aoeControl : MonoBehaviour
     {
         // Increase the local scale over time
         if (self.activeSelf)
-        {
-            Debug.Log("Active so growing");
             transform.localScale +=
                 new Vector3(growthRate, growthRate, growthRate) * Time.deltaTime;
-        }
 
         if (transform.localScale.x >= 5)
-        {
-            Debug.Log("Destroyed self");
             Destroy(self);
-        }
     }
 }

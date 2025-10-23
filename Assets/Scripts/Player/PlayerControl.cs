@@ -1,3 +1,4 @@
+using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -14,6 +15,8 @@ public class PlayerControl : MonoBehaviour
 
     private InputAction move;
     private Vector2 moveDirection = Vector2.zero;
+
+    private InputAction roll;
 
     private InputAction attack;
 
@@ -36,7 +39,9 @@ public class PlayerControl : MonoBehaviour
         // Check if weapon reference is set
         if (weapon == null)
         {
-            Debug.LogWarning("PlayerControl: Weapon reference is NULL! Trying to find weapon in children...");
+            Debug.LogWarning(
+                "PlayerControl: Weapon reference is NULL! Trying to find weapon in children..."
+            );
             weapon = GetComponentInChildren<WeaponHit>();
             if (weapon != null)
             {
@@ -44,7 +49,9 @@ public class PlayerControl : MonoBehaviour
             }
             else
             {
-                Debug.LogError("PlayerControl: Could not find WeaponHit component in children! Please attach WeaponHit script to a child GameObject or assign it manually.");
+                Debug.LogError(
+                    "PlayerControl: Could not find WeaponHit component in children! Please attach WeaponHit script to a child GameObject or assign it manually."
+                );
             }
         }
         else
@@ -64,7 +71,8 @@ public class PlayerControl : MonoBehaviour
         attack = playerControls.Player.Attack;
         attack.Enable();
 
-        Debug.Log("PlayerControl: Input system enabled. Attack action enabled.");
+        roll = playerControls.Player.Roll;
+        roll.Enable();
     }
 
     // Disables the inputs
@@ -74,44 +82,67 @@ public class PlayerControl : MonoBehaviour
 
         move.Disable();
         attack.Disable();
+        roll.Disable();
+    }
+
+    private void playerRollStart()
+    {
+        Debug.Log("Roll speed up");
+        moveSpeed = 5f;
+    }
+
+    private void playerRollEnd()
+    {
+        Debug.Log("Roll slow down");
+        moveSpeed = 1f;
     }
 
     private void playerMove()
     {
-        animator.SetBool("legSacrificed", true);
+        // animator.SetBool("legSacrificed", true);
 
         moveDirection = move.ReadValue<Vector2>();
 
         rb.linearVelocity = new Vector2(moveDirection.x * moveSpeed, moveDirection.y * moveSpeed);
 
         if (rb.linearVelocity != Vector2.zero)
+        {
             animator.SetBool("walking", true);
+
+            if (rb.linearVelocityX != 0)
+            {
+                animator.SetBool("horizontal", true);
+
+                animator.SetBool("up", false);
+                animator.SetBool("down", false);
+
+                spriteRender.flipX = rb.linearVelocityX < 0;
+            }
+            else if (rb.linearVelocityY > 0)
+            {
+                animator.SetBool("up", true);
+
+                animator.SetBool("horizontal", false);
+                animator.SetBool("down", false);
+            }
+            else
+            {
+                animator.SetBool("down", true);
+
+                animator.SetBool("horizontal", false);
+                animator.SetBool("up", false);
+            }
+        }
         else
+        {
             animator.SetBool("walking", false);
-
-        if (rb.linearVelocityX != 0)
-        {
-            animator.SetBool("horizontal", true);
-
-            animator.SetBool("up", false);
-            animator.SetBool("down", false);
-
-            spriteRender.flipX = rb.linearVelocityX < 0;
-        }
-        else if (rb.linearVelocityY > 0)
-        {
-            animator.SetBool("up", true);
-
-            animator.SetBool("horizontal", false);
-            animator.SetBool("down", false);
-        }
-        else
-        {
-            animator.SetBool("down", true);
-
             animator.SetBool("horizontal", false);
             animator.SetBool("up", false);
+            animator.SetBool("down", false);
         }
+
+        if (roll.triggered)
+            animator.SetTrigger("roll");
     }
 
     private void playerAttack()
@@ -147,6 +178,7 @@ public class PlayerControl : MonoBehaviour
     void Update()
     {
         playerMove();
+        // playerRoll();
 
         if (attack.triggered)
         {

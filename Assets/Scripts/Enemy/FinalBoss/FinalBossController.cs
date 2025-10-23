@@ -7,16 +7,13 @@ public class FinalBossController : MonoBehaviour
     private Animator animator;
 
     [SerializeField]
+    private Animator playerAnimator;
+
+    [SerializeField]
     private GameObject fireball;
 
     [SerializeField]
     private GameObject aoeField;
-
-    // Runs before the first frame
-    private void Awake() { }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() { }
 
     // Triggered by attackOne animation event
     private void attackOne()
@@ -40,6 +37,18 @@ public class FinalBossController : MonoBehaviour
         );
 
         newAOE.SetActive(true);
+    }
+
+    private void attackThree()
+    {
+        AnimatorStateInfo stateInfo = playerAnimator.GetCurrentAnimatorStateInfo(0);
+
+        if (!stateInfo.IsName("PlayerRoll"))
+        {
+            Debug.Log("Freezing player");
+
+            // implement code for freezing player
+        }
     }
 
     private double attackCooldown = 5;

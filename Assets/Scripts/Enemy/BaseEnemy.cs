@@ -15,12 +15,6 @@ public class BaseEnemy : MonoBehaviour
     [SerializeField]
     protected GameObject player;
 
-    // Awake is called before the first frame
-    void Awake() { }
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start() { }
-
     protected void chasePlayer()
     {
         Vector3 direction = player.transform.position - transform.position;
