@@ -1,4 +1,4 @@
- using UnityEngine;
+using UnityEngine;
 
 public class Shrine : MonoBehaviour, IInteractable
 {
@@ -11,7 +11,8 @@ public class Shrine : MonoBehaviour, IInteractable
         ShrineView.SetActive(false);
     }
 
-    private void OpenShrine(){
+    private void OpenShrine()
+    {
         Debug.Log("sacrifice accepted");
         ShrineView.SetActive(!ShrineView.activeSelf);
     }
@@ -25,5 +26,4 @@ public class Shrine : MonoBehaviour, IInteractable
     {
         OpenShrine();
     }
-
 }

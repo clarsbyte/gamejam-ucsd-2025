@@ -1,10 +1,14 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class EnemyController : BaseEnemy
 {
     [SerializeField]
     private SpriteRenderer spriteRender;
+
+    // void OnCollisionEnter2D(Collision2D collision)
+    // {
+    //     Debug.Log("Triggered by " + collision.gameObject.tag);
+    // }
 
     // Update is called once per frame
     void Update()

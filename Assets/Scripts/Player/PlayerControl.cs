@@ -1,4 +1,3 @@
-using System.Collections;
 using UnityEngine;
 using UnityEngine.InputSystem;
 
@@ -30,6 +29,9 @@ public class PlayerControl : MonoBehaviour
     // Reference to weapon
     [SerializeField]
     private WeaponHit weapon;
+
+    private double attackCooldown = 1;
+    private double currentAttackCooldown;
 
     // Runs before initialization
     private void Awake()
@@ -87,14 +89,39 @@ public class PlayerControl : MonoBehaviour
 
     private void playerRollStart()
     {
-        Debug.Log("Roll speed up");
-        moveSpeed = 5f;
+        moveSpeed = 3f;
     }
 
     private void playerRollEnd()
     {
-        Debug.Log("Roll slow down");
         moveSpeed = 1f;
+    }
+
+    private void updateAnimationStates()
+    {
+        if (rb.linearVelocityX != 0)
+        {
+            animator.SetBool("horizontal", true);
+
+            animator.SetBool("up", false);
+            animator.SetBool("down", false);
+
+            spriteRender.flipX = rb.linearVelocityX < 0;
+        }
+        else if (rb.linearVelocityY > 0)
+        {
+            animator.SetBool("up", true);
+
+            animator.SetBool("horizontal", false);
+            animator.SetBool("down", false);
+        }
+        else
+        {
+            animator.SetBool("down", true);
+
+            animator.SetBool("horizontal", false);
+            animator.SetBool("up", false);
+        }
     }
 
     private void playerMove()
@@ -107,31 +134,9 @@ public class PlayerControl : MonoBehaviour
 
         if (rb.linearVelocity != Vector2.zero)
         {
+            updateAnimationStates();
+
             animator.SetBool("walking", true);
-
-            if (rb.linearVelocityX != 0)
-            {
-                animator.SetBool("horizontal", true);
-
-                animator.SetBool("up", false);
-                animator.SetBool("down", false);
-
-                spriteRender.flipX = rb.linearVelocityX < 0;
-            }
-            else if (rb.linearVelocityY > 0)
-            {
-                animator.SetBool("up", true);
-
-                animator.SetBool("horizontal", false);
-                animator.SetBool("down", false);
-            }
-            else
-            {
-                animator.SetBool("down", true);
-
-                animator.SetBool("horizontal", false);
-                animator.SetBool("up", false);
-            }
         }
         else
         {
@@ -147,7 +152,12 @@ public class PlayerControl : MonoBehaviour
 
     private void playerAttack()
     {
-        Debug.Log("Starting animation");
+        if (animator.GetBool("up"))
+            animator.SetTrigger("attackUp");
+        else if (animator.GetBool("down"))
+            animator.SetTrigger("attackDown");
+        else if (animator.GetBool("horizontal") || !animator.GetBool("walking"))
+            animator.SetTrigger("attackHorizontal");
     }
 
     // Called by animation event when attack starts
@@ -180,10 +190,12 @@ public class PlayerControl : MonoBehaviour
         playerMove();
         // playerRoll();
 
-        if (attack.triggered)
+        currentAttackCooldown += Time.deltaTime;
+
+        if (attack.triggered && currentAttackCooldown >= attackCooldown)
         {
-            animator.SetTrigger("attack");
-            // Debug.Log("Attack triggered");
+            currentAttackCooldown = 0;
+            playerAttack();
         }
     }
 }

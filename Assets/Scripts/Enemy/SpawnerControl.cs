@@ -6,42 +6,20 @@ public class SpawnerControl : MonoBehaviour
     [SerializeField]
     private GameObject enemy;
 
-    [SerializeField]
-    private int enemyAmount;
-
-    // [SerializeField]
-    // private float interval = 3.5f;
-
-    // Start is called once before the first execution of Update after the MonoBehaviour is created
-    void Start()
+    public void spawnEnemy()
     {
-        StartCoroutine(spawnEnemy(enemy, enemyAmount, 0));
+        GameObject newEnemy = Instantiate(
+            enemy,
+            new Vector3(transform.position.x, transform.position.y, 0),
+            Quaternion.identity
+        );
+
+        newEnemy.SetActive(true);
     }
 
-    private IEnumerator spawnEnemy(GameObject enemy, int count, int current)
+    public void spawnWave(int amount)
     {
-        if (count != ++current)
-        {
-            yield return new WaitForSeconds(Random.Range(1f, 3.5f));
-
-            GameObject newEnemy = Instantiate(
-                enemy,
-                new Vector3(transform.position.x, transform.position.y, 0),
-                Quaternion.identity
-            );
-
-            newEnemy.SetActive(true);
-
-            StartCoroutine(spawnEnemy(enemy, count, current));
-        }
-
-        yield return new WaitForSeconds(Random.Range(0f, 0f));
-
-        // string msg = string.Format("Spawned {0} out of {1} enemies", current, count);
-
-        // Debug.Log(msg);
+        for (int i = 0; i < amount; ++i)
+            Invoke(nameof(spawnEnemy), Random.Range(1f, 3.5f));
     }
-
-    // Update is called once per frame
-    // void Update() { }
 }

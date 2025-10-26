@@ -1,4 +1,3 @@
-using System.Runtime.CompilerServices;
 using UnityEngine;
 
 public class BodyPart
@@ -28,11 +27,6 @@ public class PlayerStatus : MonoBehaviour
     public int maxHealth;
     public int currentHealth;
     public HealthBar healthBar;
-
-    private float dmg = 1f;
-    private float durability = 1f;
-    private float attackSpeed = 1f;
-    private float moveSpeed = 1f;
 
     private Modifier[] buffs;
     private Modifier[] debuffs;

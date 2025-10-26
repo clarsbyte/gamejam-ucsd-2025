@@ -13,6 +13,7 @@ GameObject:
   - component: {fileID: 4012056473507158683}
   - component: {fileID: 5330264876319152799}
   - component: {fileID: 2722918672551031227}
+  - component: {fileID: 6169149802154858097}
   m_Layer: 0
   m_Name: Zombie
   m_TagString: Enemy
@@ -171,6 +172,22 @@ CapsuleCollider2D:
   m_UsedByEffector: 0
   m_CompositeOperation: 0
   m_CompositeOrder: 0
-  m_Offset: {x: 0.014824867, y: -0.014824718}
-  m_Size: {x: 0.6145563, y: 0.85175246}
+  m_Offset: {x: 0.039537907, y: 0.0057696104}
+  m_Size: {x: 1.0264435, y: 1.1500096}
   m_Direction: 0
+--- !u!114 &6169149802154858097
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 6481891442426297321}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 6089bc0c5ed8aac4783dd6b30869b90a, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: Assembly-CSharp::EnemyHealth
+  maxHealth: 50
+  currentHealth: 0
+  iFrames: 0
+  rb: {fileID: 5330264876319152799}

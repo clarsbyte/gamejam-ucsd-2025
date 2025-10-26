@@ -2,7 +2,7 @@ using UnityEngine;
 
 public class WeaponHit : MonoBehaviour
 {
-    private int count = 0;
+    public int enemiesKilled = 0;
 
     [SerializeField]
     [Tooltip(
@@ -52,32 +52,31 @@ public class WeaponHit : MonoBehaviour
 
     void OnTriggerEnter2D(Collider2D other)
     {
-        Debug.Log(
-            "WeaponHit triggered by: "
-                + other.gameObject.name
-                + " with tag: "
-                + other.gameObject.tag
-        );
-
         if (other.gameObject.CompareTag("Enemy"))
         {
-            Debug.Log("Enemy hit! Count: " + ++count);
             EnemyHealth enemyHealth = other.gameObject.GetComponent<EnemyHealth>();
             if (enemyHealth != null)
             {
-                enemyHealth.TakeDamage(10);
-                Debug.Log("Dealt 10 damage to enemy");
+                if (enemyHealth.currentHealth <= 10)
+                    ++enemiesKilled;
+
+                if (!enemyHealth.iFrames)
+                {
+                    Debug.Log("Enemy not in iFrames");
+                    enemyHealth.TakeDamage(10);
+                    enemyHealth.iFrames = true;
+
+                    Debug.Log("Activated iFrames");
+                }
+                else
+                {
+                    Debug.Log("iFrames for " + (1 - enemyHealth.timeIniFrames));
+                }
             }
             else
             {
                 Debug.LogWarning("Enemy object missing EnemyHealth component!");
             }
         }
-    }
-
-    // Update is called once per frame
-    void Update()
-    {
-        // Debug.Log("Running");
     }
 }
