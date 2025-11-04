@@ -10,6 +10,8 @@ public class EnemyHealth : MonoBehaviour
     public bool iFrames = false;
     public double timeIniFrames = 0;
 
+    private int hitsTaken = 0;
+
     [SerializeField]
     private Rigidbody2D rb;
 
@@ -20,7 +22,10 @@ public class EnemyHealth : MonoBehaviour
 
     public void TakeDamage(int damage)
     {
-        currentHealth -= damage;
+        if (!iFrames)
+            currentHealth -= damage;
+
+        Debug.Log("Took " + (++hitsTaken) + " hits + " + iFrames);
         // Debug.Log($"Enemy took {damage} damage. Health: {currentHealth}/{maxHealth}");
 
         if (currentHealth <= 0)
@@ -29,7 +34,7 @@ public class EnemyHealth : MonoBehaviour
 
     private void Die()
     {
-        Debug.Log("Enemy died!");
+        // Debug.Log("Enemy died!");
         Destroy(gameObject);
     }
 
@@ -41,7 +46,9 @@ public class EnemyHealth : MonoBehaviour
         if (timeIniFrames >= 1)
         {
             iFrames = false;
+            timeIniFrames = 0;
             rb.simulated = true;
+            Debug.Log("iFrames now disabled");
         }
     }
 }

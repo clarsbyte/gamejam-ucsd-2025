@@ -10,24 +10,26 @@ public class WeaponHit : MonoBehaviour
     )]
     private Collider2D weaponCollider;
 
+    private int hits = 0;
+
     void Start()
     {
-        Debug.Log("WeaponHit script started on: " + gameObject.name);
+        // Debug.Log("WeaponHit script started on: " + gameObject.name);
 
-        // Only manage collider if one is specifically assigned
-        if (weaponCollider != null)
-        {
-            Debug.Log("Weapon has assigned collider. IsTrigger: " + weaponCollider.isTrigger);
-            // Disable collider by default (only enable during attack)
-            weaponCollider.enabled = false;
-            Debug.Log("Weapon collider disabled by default");
-        }
-        else
-        {
-            Debug.LogWarning(
-                "WeaponHit: No weapon collider assigned. Weapon will always be active (not recommended if on Player). Create a separate weapon GameObject or assign a specific collider."
-            );
-        }
+        // // Only manage collider if one is specifically assigned
+        // if (weaponCollider != null)
+        // {
+        //     Debug.Log("Weapon has assigned collider. IsTrigger: " + weaponCollider.isTrigger);
+        //     // Disable collider by default (only enable during attack)
+        //     weaponCollider.enabled = false;
+        //     Debug.Log("Weapon collider disabled by default");
+        // }
+        // else
+        // {
+        //     Debug.LogWarning(
+        //         "WeaponHit: No weapon collider assigned. Weapon will always be active (not recommended if on Player). Create a separate weapon GameObject or assign a specific collider."
+        //     );
+        // }
     }
 
     // Called by animation event to enable weapon hitbox
@@ -46,7 +48,7 @@ public class WeaponHit : MonoBehaviour
         if (weaponCollider != null)
         {
             weaponCollider.enabled = false;
-            Debug.Log("Weapon disabled!");
+            Debug.Log("LOOK AT ME Weapon disabled!");
         }
     }
 
@@ -62,16 +64,24 @@ public class WeaponHit : MonoBehaviour
 
                 if (!enemyHealth.iFrames)
                 {
-                    Debug.Log("Enemy not in iFrames");
+                    weaponCollider.enabled = false;
+                    // DisableWeapon();
+
+                    // Debug.Log("AFTER DISABLING THE WEAPON");
+
+                    // Debug.Log("Enemy not in iFrames");
+                    Debug.Log("Dealt " + (++hits) + " hits");
+                    Debug.Log("Weapon collider status: " + weaponCollider.isActiveAndEnabled);
+
                     enemyHealth.TakeDamage(10);
                     enemyHealth.iFrames = true;
 
-                    Debug.Log("Activated iFrames");
+                    Debug.Log("Enemy health is: " + enemyHealth.currentHealth);
                 }
-                else
-                {
-                    Debug.Log("iFrames for " + (1 - enemyHealth.timeIniFrames));
-                }
+                // else
+                // {
+                //     Debug.Log("iFrames for " + (1 - enemyHealth.timeIniFrames));
+                // }
             }
             else
             {
