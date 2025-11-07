@@ -32,6 +32,8 @@ public class PlayerControl : MonoBehaviour
 
     private double attackCooldown = 1;
     private double currentAttackCooldown;
+    private double rollCooldown = 1;
+    private double currentRollCooldown;
 
     // Runs before initialization
     private void Awake()
@@ -89,11 +91,11 @@ public class PlayerControl : MonoBehaviour
 
     private void playerRollStart()
     {
-        moveSpeed = 3f;
+        moveSpeed = 4f;
     }
 
     private void playerRollEnd()
-    {
+    {   
         moveSpeed = 1f;
     }
 
@@ -145,9 +147,12 @@ public class PlayerControl : MonoBehaviour
             animator.SetBool("up", false);
             animator.SetBool("down", false);
         }
+    }
 
-        if (roll.triggered)
-            animator.SetTrigger("roll");
+    private void playerRoll()
+    {
+        playerRollStart();
+        animator.SetTrigger("roll");
     }
 
     private void playerAttack()
@@ -191,11 +196,24 @@ public class PlayerControl : MonoBehaviour
         // playerRoll();
 
         currentAttackCooldown += Time.deltaTime;
+        currentRollCooldown += Time.deltaTime;
 
         if (attack.triggered && currentAttackCooldown >= attackCooldown)
         {
             currentAttackCooldown = 0;
             playerAttack();
         }
+
+        if (roll.triggered && currentRollCooldown >= rollCooldown)
+        {
+            currentRollCooldown = 0;
+            playerRoll();
+        }
+
+        if (currentRollCooldown >= rollCooldown)
+        {
+            playerRollEnd();
+        }
+
     }
 }
